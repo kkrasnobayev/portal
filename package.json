@@ -13,7 +13,8 @@
     "stylelint:fix": "stylelint \"src/**/*.scss\" --fix",
     "prettier": "prettier --config .prettierrc --write src/*.html src/main.ts src/imports/**/*.scss src/app/**/*.ts src/app/**/*.html src/app/**/*.scss",
     "prettier:check": "prettier --config .prettierrc --check src/*.html src/main.ts src/imports/**/*.scss src/app/**/*.ts src/app/**/*.html src/app/**/*.scss",
-    "test": "ng test"
+    "test": "ng test",
+    "test:coverage": "ng test --karma-config= --code-coverage"
   },
   "private": true,
   "dependencies": {
@@ -26,11 +27,12 @@
     "@angular/platform-browser-dynamic": "18.1.2",
     "@angular/router": "18.1.2",
     "rxjs": "7.8.1",
-    "tslib": "2.6.3"
+    "tslib": "2.6.3",
+    "@auth0/auth0-angular": "2.2.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "18.1.2",
-    "@angular/cli": "18.1.2",
+    "@angular-devkit/build-angular": "18.1.3",
+    "@angular/cli": "18.1.3",
     "@angular/compiler-cli": "18.1.2",
     "@types/jasmine": "5.1.4",
     "angular-eslint": "18.1.0",

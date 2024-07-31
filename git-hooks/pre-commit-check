@@ -14,75 +14,85 @@ then
 fi
 
 echo "Starting Pre-Commit Check on branch: $current_branch"
-echo "$SECONDS"
+
 PRETTIER_ELAPSED_TIME=0
 PRETTIER_EXIT_CODE=0
-staged_prettier_files=$(git diff --staged --name-only --diff-filter=d | grep -E '.html|scss|ts$')
+staged_prettier_files=$(git diff --staged --name-only --diff-filter=d | grep -E '.html|.scss|.ts$')
 
 if [ "$staged_prettier_files" != "" ]
 then
     echo "Running Prettier..."
+
     PRETTIER_START_TIME=$SECONDS
 
-    $exe_bin/prettier --write "$staged_prettier_files"
+    $exe_bin/prettier --write $staged_prettier_files
 
     if [ $? -ne 0 ]
     then
+        echo "Failed Prettier!"
         PRETTIER_EXIT_CODE=1
     else
         echo "Passed Prettier!"
     fi
 
     PRETTIER_ELAPSED_TIME=$(($SECONDS - $PRETTIER_START_TIME))
+
     echo "Prettier done in ${PRETTIER_ELAPSED_TIME}s"
 fi
 
 STYLELINT_ELAPSED_TIME=0
 STYLELINT_EXIT_CODE=0
-staged_scss_files=$(git diff --staged --relative=$working_dir --name-only --diff-filter=d | grep -E '.scss$')
+staged_scss_files=$(git diff --staged --name-only --diff-filter=d | grep -E '.scss$')
 
 if [ "$staged_scss_files" != "" ]
 then
     echo "Running Stylelint..."
+
     STYLELINT_START_TIME=$SECONDS
 
     $exe_bin/stylelint $staged_scss_files --quiet scss
 
     if [ $? -ne 0 ]
     then
+        echo "Failed Stylelint!"
         STYLELINT_EXIT_CODE=1
     else
         echo "Passed Stylelint!"
     fi
 
     STYLELINT_ELAPSED_TIME=$(($SECONDS - $STYLELINT_START_TIME))
+
     echo "Stylelint done in ${STYLELINT_ELAPSED_TIME}s"
 fi
 
 ESLINT_ELAPSED_TIME=0
 ESLINT_EXIT_CODE=0
-staged_ts_files=$(git diff --staged --relative=$working_dir --name-only --diff-filter=d | grep -E '.ts$')
+staged_ts_files=$(git diff --staged --name-only --diff-filter=d | grep -E '.ts$')
 
 if [ "$staged_ts_files" != "" ]
 then
     echo "Running ESLint..."
+
     ESLINT_START_TIME=$SECONDS
 
     $exe_bin/eslint $staged_ts_files --fix
 
     if [ $? -ne 0 ]
     then
+        echo "Failed ESLint!"
         ESLINT_EXIT_CODE=1
     else
         echo "Passed ESLint!"
     fi
 
     ESLINT_ELAPSED_TIME=$(($SECONDS - $ESLINT_START_TIME))
+
     echo "ESLint done in ${ESLINT_ELAPSED_TIME}s"
 fi
 
 
-TOTAL_ELAPSED_TIME=$(($PRETTIER_ELAPSED_TIME + $STYLELINT_ELAPSED_TIME + $ESLINT_ELAPSED_TIME))
+TOTAL_ELAPSED_TIME=$(("$PRETTIER_ELAPSED_TIME" + "$STYLELINT_ELAPSED_TIME" + "$ESLINT_ELAPSED_TIME"))
+
 echo "Done in ${TOTAL_ELAPSED_TIME}s"
 
 if [ $PRETTIER_EXIT_CODE -ne 0 ] || [ $STYLELINT_EXIT_CODE -ne 0 ] || [ $ESLINT_EXIT_CODE -ne 0 ]
@@ -90,4 +100,4 @@ then
     exit 1
 fi
 
-git add $staged_prettier_files $staged_ts_files
+git add $staged_prettier_files $staged_scss_files $staged_ts_files

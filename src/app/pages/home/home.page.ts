@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 
 @Component({
-    selector: 'app-home',
+    selector: 'app-home2',
     standalone: true,
     imports: [],
     templateUrl: './home.page.html',

@@ -4,32 +4,27 @@
 # To change this file without breaking the hard link edit it in Notepad.
 # Run the installation script associated with this file to create a new hard link.
 
-protected_branch='master'
+protected_branch='main'
 current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
-working_dir='../'
 exe_bin='node_modules/.bin'
-echo "$current_branch"
-if [ $current_branch = $protected_branch ]
+
+if [ "$current_branch" = $protected_branch ]
 then
     exit 0
 fi
 
 echo "Starting Pre-Commit Check on branch: $current_branch"
-echo "Changing directory to $working_dir..."
-
-cd $working_dir
-echo "Done"
-
+echo "$SECONDS"
 PRETTIER_ELAPSED_TIME=0
 PRETTIER_EXIT_CODE=0
-staged_prettier_files=$(git diff --staged --relative=$working_dir --name-only --diff-filter=d | grep -E '.html|scss|ts$')
+staged_prettier_files=$(git diff --staged --name-only --diff-filter=d | grep -E '.html|scss|ts$')
 
 if [ "$staged_prettier_files" != "" ]
 then
     echo "Running Prettier..."
     PRETTIER_START_TIME=$SECONDS
 
-    $exe_bin/prettier --write $staged_prettier_files
+    $exe_bin/prettier --write "$staged_prettier_files"
 
     if [ $? -ne 0 ]
     then

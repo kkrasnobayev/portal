@@ -1,5 +1,5 @@
 #!/bin/sh
-echo 'foooo';
+echo 'foooo2';
 # Editing this file in certain IDEs will break the hard link.
 # To change this file without breaking the hard link edit it in Notepad.
 # Run the installation script associated with this file to create a new hard link.

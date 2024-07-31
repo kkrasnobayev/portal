@@ -1,5 +1,5 @@
 #!/bin/sh
-echo 'foooo';
+
 # Editing this file in certain IDEs will break the hard link.
 # To change this file without breaking the hard link edit it in Notepad.
 # Run the installation script associated with this file to create a new hard link.
@@ -8,7 +8,7 @@ protected_branch='master'
 current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
 working_dir='../'
 exe_bin='node_modules/.bin'
-
+echo "$current_branch"
 if [ $current_branch = $protected_branch ]
 then
     exit 0

@@ -11,6 +11,7 @@ export interface Environment {
     redirectUri?: string;
 }
 
-export type GenericCollection<T = string> = Record<string, T>;
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+export type GenericCollection<T = any> = Record<string, T>;
 export type Nullable<T> = T | null;
 export type Maybe<T> = T | undefined;

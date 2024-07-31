@@ -1,0 +1,52 @@
+{
+  "name": "ascent-portal",
+  "version": "0.0.0",
+  "scripts": {
+    "postinstall": "cd git-hooks && git-hook-install.bat",
+    "ng": "ng",
+    "start": "node ./env-config.js --enableSensitiveDataLogging && ng serve",
+    "build": "node ./env-config.js && ng build",
+    "build:production": "ng build --configuration production",
+    "watch": "node ./env-config.js ng build --watch --configuration development",
+    "eslint": "ng lint",
+    "stylelint": "stylelint \"src/**/*.scss\"",
+    "stylelint:fix": "stylelint \"src/**/*.scss\" --fix",
+    "prettier": "prettier --config .prettierrc --write src/*.html src/main.ts src/imports/**/*.scss src/app/**/*.ts src/app/**/*.html src/app/**/*.scss",
+    "prettier:check": "prettier --config .prettierrc --check src/*.html src/main.ts src/imports/**/*.scss src/app/**/*.ts src/app/**/*.html src/app/**/*.scss",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "18.1.2",
+    "@angular/common": "18.1.2",
+    "@angular/compiler": "18.1.2",
+    "@angular/core": "18.1.2",
+    "@angular/forms": "18.1.2",
+    "@angular/platform-browser": "18.1.2",
+    "@angular/platform-browser-dynamic": "18.1.2",
+    "@angular/router": "18.1.2",
+    "rxjs": "7.8.1",
+    "tslib": "2.6.3"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "18.1.2",
+    "@angular/cli": "18.1.2",
+    "@angular/compiler-cli": "18.1.2",
+    "@types/jasmine": "5.1.4",
+    "angular-eslint": "18.1.0",
+    "eslint": "9.8.0",
+    "@eslint/js": "9.8.0",
+    "jasmine-core": "5.2.0",
+    "karma": "6.4.4",
+    "karma-chrome-launcher": "3.2.0",
+    "karma-coverage": "2.2.1",
+    "karma-jasmine": "5.1.0",
+    "karma-jasmine-html-reporter": "2.1.0",
+    "typescript-eslint": "7.18.0",
+    "stylelint": "16.8.1",
+    "stylelint-config-standard": "36.0.1",
+    "stylelint-scss": "6.4.1",
+    "prettier": "3.3.3",
+    "typescript": "5.5.4"
+  }
+}

@@ -30,9 +30,13 @@
               }
             ],
             "styles": [
-              "src/imports/styles/resets.scss",
               "src/imports/styles/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/@ascentgl/peak4v2-ui/src/assets/sass/"
+              ]
+            },
             "scripts": [
             ]
           },
@@ -96,13 +100,18 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "output": "/public"
               }
             ],
             "styles": [
-              "src/imports/styles/resets.scss",
               "src/imports/styles/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/@ascentgl/peak4v2-ui/src/assets/sass/"
+              ]
+            },
             "scripts": []
           }
         },

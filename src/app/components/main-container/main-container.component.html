@@ -1,0 +1,29 @@
+<peak-shell-layout>
+    <peak-header-container header>
+        <peak-header>
+            <ng-container left>
+                <img
+                    class="main-logo"
+                    ngSrc="https://cdn.ascentlogistics.com/img/peak-international-logo.svg"
+                    width="208"
+                    height="70"
+                    alt="Peak International Logo"
+                />
+            </ng-container>
+        </peak-header>
+    </peak-header-container>
+    <div
+        class="content"
+        [class.centered]="centered()"
+        [class.with-bg]="withBackground()"
+        [ngStyle]="{
+            minHeight:
+                'calc(100vh - ' + (header().nativeElement.offsetHeight + footer().nativeElement.offsetHeight) + 'px)',
+        }"
+    >
+        <ng-content />
+    </div>
+    <peak-footer-container footer>
+        <peak-footer [links]="displayedLinks()" [alt]="alt()" [copyright]="copyright()" [logoSrc]="logoSrc()" />
+    </peak-footer-container>
+</peak-shell-layout>

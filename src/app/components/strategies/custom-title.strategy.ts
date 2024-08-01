@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 @Injectable()
 export class CustomTitleStrategy extends TitleStrategy {
     private titleService: Title = inject(Title);
+    private prefix = 'Ascent Portal';
 
     override updateTitle(snapshot: RouterStateSnapshot) {
         this.setPageTitle(this.buildTitle(snapshot));
@@ -15,6 +16,6 @@ export class CustomTitleStrategy extends TitleStrategy {
     }
 
     setPageTitle(pageTitle?: string) {
-        this.titleService.setTitle(pageTitle ?? '');
+        this.titleService.setTitle(this.prefix + (pageTitle ? ' :: ' : '') + pageTitle || '');
     }
 }

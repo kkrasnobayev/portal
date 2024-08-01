@@ -5,11 +5,12 @@ import { EnvironmentService } from '../../services/environment/environment.servi
 import { NAMESPACE } from '../../globals/global.constants';
 import { Maybe, Nullable } from '../../globals/global.types';
 import { PreferredApps } from '../../globals/global.enums';
+import { PreloaderComponent } from '../../widgets/preloader/preloader.component';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [],
+    imports: [PreloaderComponent],
     templateUrl: './home.page.html',
     styleUrl: './home.page.scss',
 })

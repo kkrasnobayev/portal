@@ -14,9 +14,19 @@ export const routes: Routes = [
         data: { title: 'Home' },
     },
     {
-        path: 'about',
-        loadChildren: () => import('./pages/about/about.page').then((c) => c.ROUTES),
-        data: { title: 'About' },
+        path: 'redirect',
+        loadChildren: () => import('./pages/redirect/redirect.page').then((c) => c.ROUTES),
+        data: { title: 'Redirect' },
+    },
+    {
+        path: 'session-expired',
+        loadChildren: () => import('./pages/session-expired/session-expired.page').then((c) => c.ROUTES),
+        data: { title: 'Session Expired' },
+    },
+    {
+        path: 'terms-of-use',
+        loadChildren: () => import('./pages/terms-of-use/terms-of-use.page').then((c) => c.ROUTES),
+        data: { title: 'Terms Of Use' },
     },
     {
         path: '**',

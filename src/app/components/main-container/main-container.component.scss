@@ -1,0 +1,24 @@
+.main-logo {
+    width: 110px;
+    min-width: 110px;
+    height: auto;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+
+    &.centered ::ng-deep > div {
+        text-align: center;
+    }
+
+    &.with-bg {
+        background-image: url('../../../../public/images/Ascent_Login_Image.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}

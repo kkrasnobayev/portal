@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { NotFoundPageComponent } from './pages/not-found/not-found.page';
+import { USER_RESOLVER_FN } from './components/resolvers/user.resolver';
 
 export const routes: Routes = [
     {
@@ -7,6 +8,9 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/home/home.page').then((c) => c.ROUTES),
         pathMatch: 'full',
         data: { title: 'Home' },
+        resolve: {
+            user: USER_RESOLVER_FN,
+        },
     },
     {
         path: 'home',
@@ -17,6 +21,9 @@ export const routes: Routes = [
         path: 'redirect',
         loadChildren: () => import('./pages/redirect/redirect.page').then((c) => c.ROUTES),
         data: { title: 'Redirect' },
+        resolve: {
+            user: USER_RESOLVER_FN,
+        },
     },
     {
         path: 'session-expired',

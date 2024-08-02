@@ -1,4 +1,5 @@
 import { EnvironmentType } from './global.enums';
+import { User } from '@auth0/auth0-angular';
 
 export interface Environment {
     audience: string;
@@ -19,3 +20,5 @@ export interface Environment {
 export type GenericCollection<T = any> = Record<string, T>;
 export type Nullable<T> = T | null;
 export type Maybe<T> = T | undefined;
+
+export type AuthUser = User | null | undefined;

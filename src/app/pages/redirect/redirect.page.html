@@ -1,7 +1,4 @@
-@if (isLoading()) {
-<app-preloader />
-} @else {
-<app-main-container [showTermsOfUse]="true">
+<app-main-container>
     <div class="data-panel">
         <div class="message">
             <span class="text-card-sub-title">{{ message() }}</span>
@@ -11,4 +8,3 @@
         </div>
     </div>
 </app-main-container>
-}

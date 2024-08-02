@@ -1,31 +1,34 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Routes } from '@angular/router';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { ActivatedRoute, Routes } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { EnvironmentService } from '../../services/environment/environment.service';
-import { NAMESPACE } from '../../globals/global.constants';
 import { Maybe, Nullable } from '../../globals/global.types';
 import { PreferredApps } from '../../globals/global.enums';
 import { PreloaderComponent } from '../../widgets/preloader/preloader.component';
+import { MainContainerComponent } from '../../components/main-container/main-container.component';
+import { NAMESPACE } from '../../globals/global.constants';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [PreloaderComponent],
+    imports: [PreloaderComponent, MainContainerComponent],
     templateUrl: './home.page.html',
     styleUrl: './home.page.scss',
 })
 export class HomePageComponent implements OnInit {
+    noPreferredApp: WritableSignal<boolean> = signal<boolean>(false);
+
     private auth: AuthService = inject(AuthService);
     private environmentService: EnvironmentService = inject(EnvironmentService);
+    private route: ActivatedRoute = inject(ActivatedRoute);
+    private user = this.route.snapshot.data['user'];
 
     ngOnInit(): void {
-        this.auth.user$.subscribe((user) => {
-            if (user) {
-                this.redirectToApp(user[NAMESPACE + 'preferredApp']);
-            } else {
-                this.auth.loginWithRedirect();
-            }
-        });
+        if (this.user) {
+            this.redirectToApp(this.user[NAMESPACE + 'preferredApp']);
+        } else {
+            this.auth.loginWithRedirect();
+        }
     }
 
     redirectToApp(preferredApp: Maybe<PreferredApps>): void {
@@ -34,7 +37,7 @@ export class HomePageComponent implements OnInit {
         if (url) {
             window.location.href = url;
         } else {
-            console.log("You don't have a preferred App");
+            this.noPreferredApp.set(true);
         }
     }
 }

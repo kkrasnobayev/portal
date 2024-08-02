@@ -55,7 +55,7 @@ export class MainContainerComponent implements AfterViewInit {
     copyright: InputSignal<Copyright> = input({
         text: `&copy; ${new Date().getFullYear()} Peak&trade; is an Ascent Global Logistics Technology`,
     });
-    showTermsOfUse: InputSignal<boolean> = input<boolean>(false);
+    showTermsOfUse: InputSignal<boolean> = input<boolean>(true);
     links: InputSignal<Link[]> = input<Link[]>([
         {
             href: 'mailto:PEAKsupport@ascentgl.com',

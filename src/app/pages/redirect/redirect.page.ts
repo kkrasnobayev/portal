@@ -17,27 +17,26 @@ export class RedirectPageComponent implements OnInit {
 
     private auth: AuthService = inject(AuthService);
     private route: ActivatedRoute = inject(ActivatedRoute);
+    private user = this.route.snapshot.data['user'];
 
     ngOnInit(): void {
-        this.auth.isAuthenticated$.subscribe((isAuthenticated) => {
-            if (isAuthenticated) {
-                this.auth.logout();
-            } else {
-                this.route.queryParams.subscribe((params: Params) => {
-                    if (params['success'] === 'true') {
-                        this.auth.loginWithRedirect();
-                    } else {
-                        const message = (params['message'] ?? '').trim();
+        if (this.user) {
+            this.auth.logout();
+        } else {
+            this.route.queryParams.subscribe((params: Params) => {
+                if (params['success'] === 'true') {
+                    this.auth.loginWithRedirect();
+                } else {
+                    const message = (params['message'] ?? '').trim();
 
-                        if (message) {
-                            this.message.set(message);
-                        }
-
-                        this.isLoading.set(false);
+                    if (message) {
+                        this.message.set(message);
                     }
-                });
-            }
-        });
+
+                    this.isLoading.set(false);
+                }
+            });
+        }
     }
 
     login(): boolean {

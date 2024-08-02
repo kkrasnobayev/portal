@@ -15,6 +15,7 @@ export class PreloaderService {
              * if route navigation ends - make sure to hide preloader
              */
             if (event instanceof RouteConfigLoadStart) {
+                console.log('SHOW');
                 this.isLoading.set(!!event.route.data?.['preloader']);
             } else if (event instanceof NavigationEnd) {
                 this.isLoading.set(false);

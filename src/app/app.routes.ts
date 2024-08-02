@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { NotFoundPageComponent } from './pages/not-found/not-found.page';
 import { TRANSLOCO_RESOLVER } from './components/resolvers/transloco.resolver';
 import { AUTHENTICATED_USER_ROUTE_GUARD } from './components/guards/authenticated-user.guard';
-import { REDIRECT_PAGE_USER_ROUTE_GUARD } from './pages/redirect/redirect.page.guard';
+import { GUEST_USER_ROUTE_GUARD } from './components/guards/guest-user.guard';
 
 export const routes: Routes = [
     {
@@ -25,12 +25,12 @@ export const routes: Routes = [
                 path: 'redirect',
                 loadChildren: () => import('./pages/redirect/redirect.page').then((c) => c.ROUTES),
                 data: { title: 'Redirect', preloader: true },
-                canActivate: [REDIRECT_PAGE_USER_ROUTE_GUARD],
             },
             {
                 path: 'session-expired',
                 loadChildren: () => import('./pages/session-expired/session-expired.page').then((c) => c.ROUTES),
                 data: { title: 'Session Expired' },
+                canActivate: [GUEST_USER_ROUTE_GUARD],
             },
             {
                 path: 'terms-of-use',

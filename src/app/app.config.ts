@@ -35,7 +35,7 @@ export const appConfig: ApplicationConfig = {
                 domain: envConfig.domain,
                 clientId: envConfig.clientId,
                 authorizationParams: {
-                    redirect_uri: envConfig.redirectUri,
+                    redirect_uri: envConfig.redirectUri ?? window.location.origin,
                     audience: envConfig.audience,
                 },
             }),

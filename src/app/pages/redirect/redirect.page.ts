@@ -5,6 +5,7 @@ import { MainContainerComponent } from '../../components/main-container/main-con
 import { NgOptimizedImage } from '@angular/common';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { LoginLinkComponent } from '../../components/login-link/login-link.component';
+import { REDIRECT_PAGE_USER_ROUTE_GUARD } from './redirect.page.guard';
 
 @Component({
     selector: 'app-redirect',
@@ -29,4 +30,6 @@ export class RedirectPageComponent implements OnInit {
     }
 }
 
-export const ROUTES: Routes = [{ path: '', component: RedirectPageComponent }];
+export const ROUTES: Routes = [
+    { path: '', component: RedirectPageComponent, canActivate: [REDIRECT_PAGE_USER_ROUTE_GUARD] },
+];

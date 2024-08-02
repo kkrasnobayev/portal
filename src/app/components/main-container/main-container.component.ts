@@ -12,7 +12,7 @@ import {
     viewChild,
 } from '@angular/core';
 import { PreloaderComponent } from '../../widgets/preloader/preloader.component';
-import { JsonPipe, NgOptimizedImage, NgStyle } from '@angular/common';
+import { NgOptimizedImage, NgStyle } from '@angular/common';
 import {
     Copyright,
     PeakFooterContainerComponent,
@@ -24,6 +24,8 @@ import {
     PeakShellLayoutModule,
 } from '@ascentgl/peak4v2-ui';
 import { Link } from '@ascentgl/peak4v2-ui';
+import { TranslocoService } from '@jsverse/transloco';
+import { Languages } from '../../globals/global.enums';
 
 @Component({
     selector: 'app-main-container',
@@ -37,12 +39,12 @@ import { Link } from '@ascentgl/peak4v2-ui';
         PeakHeaderContainerModule,
         PeakShellLayoutModule,
         NgStyle,
-        JsonPipe,
     ],
     templateUrl: './main-container.component.html',
     styleUrl: './main-container.component.scss',
 })
 export class MainContainerComponent implements AfterViewInit {
+    private transloco: TranslocoService = inject(TranslocoService);
     header: Signal<ElementRef> = viewChild.required(PeakHeaderContainerComponent, {
         read: ElementRef,
     });
@@ -53,7 +55,7 @@ export class MainContainerComponent implements AfterViewInit {
     withBackground: InputSignal<boolean> = input<boolean>(true);
     alt: InputSignal<string> = input<string>('Ascent Logo');
     copyright: InputSignal<Copyright> = input({
-        text: `&copy; ${new Date().getFullYear()} Peak&trade; is an Ascent Global Logistics Technology`,
+        text: `&copy; ${new Date().getFullYear()} ${this.transloco.translate('Copyright')}`,
     });
     showTermsOfUse: InputSignal<boolean> = input<boolean>(true);
     links: InputSignal<Link[]> = input<Link[]>([
@@ -62,8 +64,11 @@ export class MainContainerComponent implements AfterViewInit {
             text: 'PEAKsupport@ascentgl.com',
         },
         {
-            href: 'https://ascentlogistics.com',
-            text: ' Legal Disclaimer',
+            href:
+                this.transloco.getActiveLang() === Languages.es
+                    ? 'https://2744657.fs1.hubspotusercontent-na1.net/hubfs/2744657/Privacy-Notice-Mexico.pdf'
+                    : 'https://ascentlogistics.com/privacy-policy',
+            text: this.transloco.translate('PolicyAndLegalDisclaimer'),
             target: '_blank',
         },
     ]);
@@ -80,7 +85,7 @@ export class MainContainerComponent implements AfterViewInit {
 
     private readonly termsOfServiceLink: Link = {
         href: '/terms-of-use',
-        text: 'Terms of Use',
+        text: this.transloco.translate('TermsOfUse'),
     };
 
     private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);

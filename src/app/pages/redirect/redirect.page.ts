@@ -4,28 +4,31 @@ import { PreloaderComponent } from '../../widgets/preloader/preloader.component'
 import { AuthService } from '@auth0/auth0-angular';
 import { MainContainerComponent } from '../../components/main-container/main-container.component';
 import { NgOptimizedImage } from '@angular/common';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import { LoginLinkComponent } from '../../components/login-link/login-link.component';
 
 @Component({
     selector: 'app-redirect',
     standalone: true,
-    imports: [PreloaderComponent, NgOptimizedImage, MainContainerComponent],
+    imports: [PreloaderComponent, NgOptimizedImage, MainContainerComponent, TranslocoPipe, LoginLinkComponent],
     templateUrl: './redirect.page.html',
 })
 export class RedirectPageComponent implements OnInit {
+    private transloco = inject(TranslocoService);
     isLoading: WritableSignal<boolean> = signal<boolean>(true);
-    message: WritableSignal<string> = signal<string>('Sorry, this link has expired');
+    message: WritableSignal<string> = signal<string>(this.transloco.translate('LinkIsExpired'));
 
-    private auth: AuthService = inject(AuthService);
+    private authService: AuthService = inject(AuthService);
     private route: ActivatedRoute = inject(ActivatedRoute);
     private user = this.route.snapshot.data['user'];
 
     ngOnInit(): void {
         if (this.user) {
-            this.auth.logout();
+            this.authService.logout();
         } else {
             this.route.queryParams.subscribe((params: Params) => {
                 if (params['success'] === 'true') {
-                    this.auth.loginWithRedirect();
+                    this.authService.loginWithRedirect();
                 } else {
                     const message = (params['message'] ?? '').trim();
 
@@ -37,11 +40,6 @@ export class RedirectPageComponent implements OnInit {
                 }
             });
         }
-    }
-
-    login(): boolean {
-        this.auth.loginWithRedirect();
-        return false;
     }
 }
 

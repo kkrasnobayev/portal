@@ -32,9 +32,10 @@
     "tslib": "2.6.3",
     "@ascentgl/peak4v2-icons": "2.6.1",
     "@ascentgl/peak4v2-ui": "2.19.4",
-    "@mat-datetimepicker/core": "13.0.2",
-    "date-fns": "2.30.0",
-    "@auth0/auth0-angular": "2.2.3"
+    "@mat-datetimepicker/core": "14.0.0",
+    "date-fns": "3.6.0",
+    "@auth0/auth0-angular": "2.2.3",
+    "@jsverse/transloco": "7.4.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "18.1.3",

@@ -7,18 +7,19 @@ import { PreferredApps } from '../../globals/global.enums';
 import { PreloaderComponent } from '../../widgets/preloader/preloader.component';
 import { MainContainerComponent } from '../../components/main-container/main-container.component';
 import { NAMESPACE } from '../../globals/global.constants';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [PreloaderComponent, MainContainerComponent],
+    imports: [PreloaderComponent, MainContainerComponent, TranslocoPipe],
     templateUrl: './home.page.html',
     styleUrl: './home.page.scss',
 })
 export class HomePageComponent implements OnInit {
     noPreferredApp: WritableSignal<boolean> = signal<boolean>(false);
 
-    private auth: AuthService = inject(AuthService);
+    private authService: AuthService = inject(AuthService);
     private environmentService: EnvironmentService = inject(EnvironmentService);
     private route: ActivatedRoute = inject(ActivatedRoute);
     private user = this.route.snapshot.data['user'];
@@ -27,7 +28,7 @@ export class HomePageComponent implements OnInit {
         if (this.user) {
             this.redirectToApp(this.user[NAMESPACE + 'preferredApp']);
         } else {
-            this.auth.loginWithRedirect();
+            this.authService.loginWithRedirect();
         }
     }
 

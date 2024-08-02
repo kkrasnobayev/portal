@@ -1,4 +1,4 @@
-@if (isLoading()) {
+@if (preloaderService.isLoading()) {
     <app-preloader />
 } @else {
     <router-outlet />

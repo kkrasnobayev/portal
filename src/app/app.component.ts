@@ -1,6 +1,7 @@
-import { Component, signal, WritableSignal } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { PreloaderComponent } from './widgets/preloader/preloader.component';
+import { PreloaderService } from './services/preloader.service';
 
 @Component({
     selector: 'app-root',
@@ -10,15 +11,9 @@ import { PreloaderComponent } from './widgets/preloader/preloader.component';
     styleUrl: './app.component.scss',
 })
 export class AppComponent {
-    isLoading: WritableSignal<boolean> = signal<boolean>(true);
+    preloaderService: PreloaderService = inject(PreloaderService);
 
-    constructor(private router: Router) {
-        this.router.events.subscribe((event): void => {
-            if (event instanceof NavigationStart) {
-                this.isLoading.set(true);
-            } else if (event instanceof NavigationEnd) {
-                this.isLoading.set(false);
-            }
-        });
+    constructor() {
+        this.preloaderService.activate();
     }
 }

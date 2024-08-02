@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { ActivatedRoute, Routes } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
+import { Routes } from '@angular/router';
+import { User } from '@auth0/auth0-angular';
 import { EnvironmentService } from '../../services/environment/environment.service';
 import { Maybe, Nullable } from '../../globals/global.types';
 import { PreferredApps } from '../../globals/global.enums';
@@ -8,6 +8,7 @@ import { PreloaderComponent } from '../../widgets/preloader/preloader.component'
 import { MainContainerComponent } from '../../components/main-container/main-container.component';
 import { NAMESPACE } from '../../globals/global.constants';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'app-home',
@@ -19,17 +20,13 @@ import { TranslocoPipe } from '@jsverse/transloco';
 export class HomePageComponent implements OnInit {
     noPreferredApp: WritableSignal<boolean> = signal<boolean>(false);
 
-    private authService: AuthService = inject(AuthService);
     private environmentService: EnvironmentService = inject(EnvironmentService);
-    private route: ActivatedRoute = inject(ActivatedRoute);
-    private user = this.route.snapshot.data['user'];
+    private userService: UserService = inject(UserService);
 
     ngOnInit(): void {
-        if (this.user) {
-            this.redirectToApp(this.user[NAMESPACE + 'preferredApp']);
-        } else {
-            this.authService.loginWithRedirect();
-        }
+        this.userService.getUserSecure().subscribe((user: User) => {
+            this.redirectToApp(user[NAMESPACE + 'preferredApp']);
+        });
     }
 
     redirectToApp(preferredApp: Maybe<PreferredApps>): void {

@@ -5,7 +5,7 @@ import { inject } from '@angular/core';
 import { Translation, TranslocoService } from '@jsverse/transloco';
 import { Maybe } from '../../globals/global.types';
 
-export const TRANSLOCO_RESOLVER_FN: ResolveFn<true> = (route: ActivatedRouteSnapshot): Observable<true> => {
+export const TRANSLOCO_RESOLVER: ResolveFn<true> = (route: ActivatedRouteSnapshot): Observable<true> => {
     const translocoService: TranslocoService = inject(TranslocoService);
 
     const translocoScopes: Maybe<string[]> = route.data['translocoScopes'];

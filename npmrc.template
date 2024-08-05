@@ -1,0 +1,4 @@
+@fortawesome:registry=https://npm.fontawesome.com/
+//npm.fontawesome.com/:_authToken={fontawesome-token}
+registry=https://aoddevproj.pkgs.visualstudio.com/_packaging/AscentNPM/npm/registry/
+always-auth=true

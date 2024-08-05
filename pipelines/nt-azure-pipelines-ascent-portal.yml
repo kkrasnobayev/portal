@@ -1,0 +1,75 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+pool: 'Azure Pipelines'
+
+variables:
+  tag: '$(Build.BuildNumber)'
+
+steps:
+  - task: Docker@2
+    inputs:
+      containerRegistry: "ascupue2intfwdcre01"
+      command: "login"
+  
+  - task: NodeTool@0
+    inputs:
+      versionSource: 'spec'
+      versionSpec: '16.x'
+    displayName: "set node version"
+
+
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        sed -i '/postinstall/d' $(Build.SourcesDirectory)/package.json
+
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        export
+        mv $(Build.SourcesDirectory)/npmrc.template $(Build.SourcesDirectory)/.npmrc
+        cat $(Build.SourcesDirectory)/.npmrc
+
+  - task: Npm@1
+    inputs:
+      command: 'install'
+      workingDir: '$(Build.SourcesDirectory)/'
+      verbose: true
+
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      workingDir: '$(Build.SourcesDirectory)/'
+      customCommand: 'run build:production'
+        
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'ascupue2intfwdcre01'
+      repository: 'ascent-portal'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+      tags: '$(Build.BuildNumber)'
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: "ascupue2intfwdcre01"
+      command: "logout"
+
+  # Clean Up Build Files
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        rm -r -f /mnt/work/*
+        rm /tmp/*.tmp -f
+        docker system prune -af   

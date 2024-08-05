@@ -1,4 +1,4 @@
-import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, TitleStrategy } from '@angular/router';
 import { inject, Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
@@ -12,10 +12,25 @@ export class CustomTitleStrategy extends TitleStrategy {
     }
 
     override buildTitle(snapshot: RouterStateSnapshot): string {
-        return snapshot.root.firstChild?.data['title'] ?? '';
+        /**
+         * get topmost snapshot and its title
+         */
+        let activatedSnapshot: ActivatedRouteSnapshot = snapshot.root;
+        let title: string = activatedSnapshot.title ?? '';
+
+        /**
+         * drill down the activated snapshot children to get the deepest level;
+         * if activated snapshot has a title - preserve it
+         */
+        while (activatedSnapshot.firstChild) {
+            activatedSnapshot = activatedSnapshot.firstChild;
+            if (activatedSnapshot.title) title = activatedSnapshot.title;
+        }
+
+        return title;
     }
 
-    setPageTitle(pageTitle?: string) {
+    setPageTitle(pageTitle?: string): void {
         this.titleService.setTitle(this.prefix + (pageTitle ? ' :: ' : '') + pageTitle || '');
     }
 }

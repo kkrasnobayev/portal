@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { PreloaderComponent } from './widgets/preloader/preloader.component';
+import { PreloaderComponent } from './components/widgets/preloader/preloader.component';
 import { PreloaderService } from './services/preloader.service';
 
 @Component({

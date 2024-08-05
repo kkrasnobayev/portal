@@ -1,10 +1,10 @@
-import { Routes } from '@angular/router';
 import { NotFoundPageComponent } from './pages/not-found/not-found.page';
 import { TRANSLOCO_RESOLVER } from './components/resolvers/transloco.resolver';
 import { AUTHENTICATED_USER_ROUTE_GUARD } from './components/guards/authenticated-user.guard';
 import { GUEST_USER_ROUTE_GUARD } from './components/guards/guest-user.guard';
+import { AppRoute } from './globals/global.types';
 
-export const routes: Routes = [
+export const routes: AppRoute[] = [
     {
         path: '',
         resolve: { transloco: TRANSLOCO_RESOLVER },
@@ -13,29 +13,32 @@ export const routes: Routes = [
                 path: '',
                 loadChildren: () => import('./pages/home/home.page').then((c) => c.ROUTES),
                 pathMatch: 'full',
-                data: { title: 'Home', preloader: true },
+                title: 'Home',
+                data: { showPreloader: true },
                 canActivate: [AUTHENTICATED_USER_ROUTE_GUARD],
             },
             {
                 path: 'home',
                 redirectTo: '',
-                data: { title: 'Home' },
+                title: 'Home',
             },
             {
                 path: 'redirect',
                 loadChildren: () => import('./pages/redirect/redirect.page').then((c) => c.ROUTES),
-                data: { title: 'Redirect', preloader: true },
+                title: 'Redirect',
+                data: { showPreloader: true },
             },
             {
                 path: 'session-expired',
                 loadChildren: () => import('./pages/session-expired/session-expired.page').then((c) => c.ROUTES),
-                data: { title: 'Session Expired' },
+                title: 'Session Expired',
                 canActivate: [GUEST_USER_ROUTE_GUARD],
             },
             {
                 path: 'terms-of-use',
+                title: 'Terms Of Use',
                 loadChildren: () => import('./pages/terms-of-use/terms-of-use.page').then((c) => c.ROUTES),
-                data: { title: 'Terms Of Use', translocoScopes: ['terms-of-use'] },
+                data: { translocoScopes: ['terms-of-use'] },
                 resolve: {
                     transloco: TRANSLOCO_RESOLVER,
                 },
@@ -43,7 +46,7 @@ export const routes: Routes = [
             {
                 path: '**',
                 component: NotFoundPageComponent,
-                data: { title: 'Not Found' },
+                title: 'Not Found',
             },
         ],
     },

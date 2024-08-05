@@ -11,7 +11,7 @@ import { TranslocoLoaderService } from './services/transloco-loader.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Languages } from './globals/global.enums';
 
-const envService = new EnvironmentService();
+const envService: EnvironmentService = new EnvironmentService();
 const envConfig: Environment = envService.getConfiguration();
 
 export const appConfig: ApplicationConfig = {

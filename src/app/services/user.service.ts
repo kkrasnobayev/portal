@@ -9,6 +9,11 @@ export class UserService {
 
     private authService: AuthService = inject(AuthService);
 
+    /**
+     * get user or throw an error if user is not available
+     * NOTE: this method is useful for the routes that are not available
+     * without the user
+     */
     getUserSecure(): Observable<User> {
         return this.getUser().pipe(
             map((user: Nullable<User>) => {
@@ -23,6 +28,9 @@ export class UserService {
         );
     }
 
+    /**
+     * get user data either from the property or from the auth service
+     */
     getUser(): Observable<Nullable<User>> {
         if (this.user) {
             return of(this.user);

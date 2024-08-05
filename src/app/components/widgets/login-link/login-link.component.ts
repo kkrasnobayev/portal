@@ -7,12 +7,12 @@ import { TranslocoPipe } from '@jsverse/transloco';
     standalone: true,
     imports: [TranslocoPipe],
     templateUrl: './login-link.component.html',
+    styleUrl: './login-link.component.scss',
 })
 export class LoginLinkComponent {
     private authService: AuthService = inject(AuthService);
 
-    login(): boolean {
+    login(): void {
         this.authService.loginWithRedirect();
-        return false;
     }
 }

@@ -11,7 +11,7 @@ import {
     Signal,
     viewChild,
 } from '@angular/core';
-import { PreloaderComponent } from '../../widgets/preloader/preloader.component';
+import { PreloaderComponent } from '../preloader/preloader.component';
 import { NgOptimizedImage, NgStyle } from '@angular/common';
 import {
     Copyright,
@@ -25,7 +25,7 @@ import {
 } from '@ascentgl/peak4v2-ui';
 import { Link } from '@ascentgl/peak4v2-ui';
 import { TranslocoService } from '@jsverse/transloco';
-import { Languages } from '../../globals/global.enums';
+import { Languages } from '../../../globals/global.enums';
 
 @Component({
     selector: 'app-main-container',
@@ -72,6 +72,7 @@ export class MainContainerComponent implements AfterViewInit {
             target: '_blank',
         },
     ]);
+    logoSrc: InputSignal<string> = input<string>('https://cdn.ascentlogistics.com/img/ascent-logo.png');
 
     displayedLinks: Signal<Link[]> = computed(() => {
         if (this.showTermsOfUse()) {
@@ -80,8 +81,6 @@ export class MainContainerComponent implements AfterViewInit {
 
         return this.links();
     });
-
-    logoSrc: InputSignal<string> = input<string>('https://cdn.ascentlogistics.com/img/ascent-logo.png');
 
     private readonly termsOfServiceLink: Link = {
         href: '/terms-of-use',

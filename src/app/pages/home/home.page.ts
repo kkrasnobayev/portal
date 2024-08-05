@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
-import { PreloaderComponent } from '../../widgets/preloader/preloader.component';
-import { MainContainerComponent } from '../../components/main-container/main-container.component';
+import { PreloaderComponent } from '../../components/widgets/preloader/preloader.component';
+import { MainContainerComponent } from '../../components/widgets/main-container/main-container.component';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { HOME_PAGE_USER_ROUTE_GUARD } from './home.page.guard';
 

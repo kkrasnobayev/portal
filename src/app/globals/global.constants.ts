@@ -1,1 +1,1 @@
-export const NAMESPACE = 'https://ascent-intl/';
+export const APPLICATIONS_NAMESPACE = 'https://ascent-intl/';

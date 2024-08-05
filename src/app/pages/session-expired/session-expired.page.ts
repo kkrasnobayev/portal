@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
-import { MainContainerComponent } from '../../components/main-container/main-container.component';
+import { MainContainerComponent } from '../../components/widgets/main-container/main-container.component';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { LoginLinkComponent } from '../../components/login-link/login-link.component';
+import { LoginLinkComponent } from '../../components/widgets/login-link/login-link.component';
 
 @Component({
     selector: 'app-session-expired',
